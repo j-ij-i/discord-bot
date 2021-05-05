@@ -158,4 +158,4 @@ client.on('message', msg => {
 });
 
 
-client.login('ODM5MDMzMTM5NjIzNDkzNjYy.YJDwgA.wGDiage11y33foSSIp5ywNDrBAE');
+client.login('');
