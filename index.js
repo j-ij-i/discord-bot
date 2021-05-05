@@ -26,15 +26,17 @@ let weekName = new Array('일','월','화','수','목','금','토');
 //현재
 let now = new Date(); //현재시간을 구한다. 
 let end = new Date(now.getFullYear(),now.getMonth(),now.getDate(),18,00,00);
-let work = new Date(now.getFullYear(),now.getMonth(),(now.getDate()+1),09,00,00);
 let quit = new Date("May 31,2021,18:00:00").getTime();
 let et = end.getTime(); // 종료시간만 가져온다.
-let wt = work.getTime(); // 오픈시간만 가져온다
-
 
 const quitCount = () => {
+    let quit = new Date("May 31,2021,18:00:00");
     let now = new Date(); //현재시간을 구한다. 
     const remainDate = quit - now;
+    let i = 0;
+    let count = 0;
+    let quitDday = quit.getDate();
+    let quitDate = now.getDate();
     var d = Math.floor(remainDate / (1000 * 60 * 60 * 24));
     var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
@@ -42,7 +44,15 @@ const quitCount = () => {
     if(s < 10){
         s = '0'+s;
     }
-    const result = "문더니 퇴사까지\n"+d+'일 '+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 수고~';
+    for( let i = 0 ; quitDate+i <= quitDday; i++){
+        let qd = new Date(now.getFullYear(),now.getMonth(),now.getDate()+i,18,00,00);
+          if(quitDate+i !== 5 && quitDate+i !== 19 && qd.getDay() !== 6 && qd.getDay() !== 0){
+            count++;
+            console.log( "i : "+i + " day : "+ qd.getDate());
+          }
+      }
+    const result = `문더니 퇴사까지\n ${d}일 ${h}시간 ${m}분 ${s}초 남았습니당~\n문더니 수고~ \n 공휴일, 주말 빼면 ${count}일 ${h}시간 ${m}분 ${s}초 남았구요~~`;
+    
     return result;
 }
 
@@ -56,11 +66,11 @@ const workendCount = () => {
   if(s < 10){
       s = '0'+s;
   }
-  if(m < 0 || s < 0 ){
-    result = "6시 넘어서 문더니 퇴근했습니다~ \n아마도~~";
+  if(h < 0){
+    result = "6시 넘어서 문더니 퇴근했습니다~ \n수고했어 문더니~~";
   }
-  else if(h < 0){
-    result = "문더니 퇴근했습니다~~\n문더니 축하해~~";
+  else if(m < 0 || s < 0 ){
+    result = "6시 넘어서 문더니 퇴근했습니다~ \n아마도~~";
   }
   else{
   result = "문더니 퇴근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 수고~';
@@ -70,7 +80,9 @@ const workendCount = () => {
 
 
 const workCount = () => {
-  let now = new Date(); //현재시간을 구한다. 
+  let now = new Date(); //
+  let work = new Date(now.getFullYear(),now.getMonth(),(now.getDate()+1),09,00,00);
+  let wt = work.getTime(); // 오픈시간만 가져온다
   const remainDate = wt - now;
   var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
@@ -83,15 +95,11 @@ const workCount = () => {
 }
 
 const nowTimeCount = () => {
-  let now = new Date(); //현재시간을 구한다. 
-  const remainDate = now;
-  var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
-  var s = Math.floor((remainDate % (1000 * 60)) / 1000);
-  if(s < 10){
-      s = '0'+s;
-  }
-  const result = "현재 시간은 "+h+'시 '+m+'분 '+s+'초 입니다~';
+  const date = new Date();
+  const Hours = date.getHours();
+  const mins = date.getMinutes();
+  const sec = date.getSeconds();
+  const result = `현재 ${Hours}시 ${mins}분 ${sec}초 입니다~`;
   return result;
 }
 
@@ -101,20 +109,53 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === '퇴근 언제해' ) {  // 언제 퇴근해 퇴근 퇴근하고싶어 등등 
-    msg.reply(workendCount());
-  }
-  else if (msg.content === '출근 언제해') {
-    msg.reply(workCount());
-  }
-//  else if (msg.content === '지금 몇시야') {
-//    msg.reply(nowTimeCount());
-//  }
-  else if (msg.content === '퇴사 언제해') {
-    msg.reply(quitCount());
-  }
+  switch(msg.content){
+    case '퇴근 언제해':
+    case '퇴근언제야':
+    case '퇴근 언제야':      
+    case '퇴근':           
+    case '퇴근해':           
+    case '퇴근해!':           
+    case '문더나 퇴근해!':   
+    case '퇴근언제해':
+    case '언제 퇴근해':     
+    case '언제퇴근해':     
+      msg.reply(workendCount());  
+      break;  
+    case '출근 언제해':
+    case '출근언제야':
+    case '출근 언제야':
+    case '출근':           
+    case '출근해':    
+    case '출근해!':    
+    case '문더나 출근해!':   
+    case '출근언제해':
+    case '언제 출근해':     
+    case '언제출근해':     
+      msg.reply(workCount());
+      break;
+    case '퇴사 언제해':
+    case '퇴사언제야':
+    case '퇴사 언제야':           
+    case '문더나 퇴사언제해':   
+    case '퇴사언제해':
+    case '언제 퇴사해':     
+    case '언제퇴사해':
+    case '퇴사':
+    case '퇴사일':
+    case '퇴사날짜':
+    case '퇴사날':
+      msg.reply(quitCount());
+      break;
+    case '지금 몇시야':
+    case '지금몇시야':
+    case '몇시야':
+    case '몇시니':
+      msg.reply(nowTimeCount());
+      break;
+    }
   
 });
 
 
-client.login('');
+client.login('ODM5MDMzMTM5NjIzNDkzNjYy.YJDwgA.wGDiage11y33foSSIp5ywNDrBAE');
