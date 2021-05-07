@@ -63,15 +63,23 @@ const workendCount = () => {
   var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
   var s = Math.floor((remainDate % (1000 * 60)) / 1000);
+  ( )
   if(s < 10){
       s = '0'+s;
   }
-  if(h < 0){
+
+  if(now.getDay() === 6 || now.getDay() === 0){
+    result = "오늘은 주말이라 출근 안했습니다~~";
+  }
+  else if(now.getDate() === 7 || now.getDate() === 19){
+    result = "오늘 문선이는 쉬었습니다~~";
+  }
+  else if(h < 0){
     result = "6시 넘어서 문더니 퇴근했습니다~ \n수고했어 문더니~~";
   }
   else if(m < 0 || s < 0 ){
     result = "6시 넘어서 문더니 퇴근했습니다~ \n아마도~~";
-  }
+  } 
   else{
   result = "문더니 퇴근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 수고~';
   }
@@ -84,13 +92,18 @@ const workCount = () => {
   let work = new Date(now.getFullYear(),now.getMonth(),(now.getDate()+1),09,00,00);
   let wt = work.getTime(); // 오픈시간만 가져온다
   const remainDate = wt - now;
+  let result = '';
   var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
   var s = Math.floor((remainDate % (1000 * 60)) / 1000);
   if(s < 10){
       s = '0'+s;
   }
-  const result = "문더니 출근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 화이팅~';
+  if(work.getDay() === 6 || work.getDay() === 0){
+    result = "내일은 주말입니다~~ 잘쉬세용~";
+  }else{
+    result = "문더니 출근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 화이팅~';
+  }
   return result;
 }
 
@@ -158,4 +171,4 @@ client.on('message', msg => {
 });
 
 
-client.login('');
+client.login('ODM5MDMzMTM5NjIzNDkzNjYy.YJDwgA.gf4k10d2MN88rhJBNVy7HA_chfo');
