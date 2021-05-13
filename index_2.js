@@ -20,9 +20,20 @@ const tripCount = () => {
   if(s < 10){
       s = '0'+s;
   }
-  const result = ` ᕕ( ᐛ )ᕗ  ⎛⎝⎛° ͜ʖ°⎞⎠⎞  여행까지 D-${d}  ⎛⎝⎛° ͜ʖ°⎞⎠⎞  ᕕ( ᐛ )ᕗ \n  (ง˙∇˙)ว  ${d}일 ${h}시간 ${m}분 ${s}초\ 남았습니당  (ว˙∇˙)ง `;
+  const result = tripoutput(trip.getMonth()+1, trip.getDate(), d);
   return result;
 }
+const tripoutput = ( month, date, dday) =>{
+  const exampleEmbed = new Discord.MessageEmbed()
+	.setColor("#df7ff4")
+	.setTitle("여행")
+  .addFields(
+		{ name: "여행 날짜", value: `${month}월 ${date}일 ⎛⎝⎛° ͜ʖ°⎞⎠⎞ `, inline: true },
+		{ name: '남은 날짜', value: `(ง˙∇˙)ว D - ${dday} (ว˙∇˙)ง`, inline: true },
+	)
+  return exampleEmbed;
+}
+
 
 const jonggang = () => {
   let gunJonggang = new Date("Jun 17,2021,15:00:00");
@@ -38,27 +49,24 @@ const jonggang = () => {
   if(s < 10){
       s = '0'+s;
   }
-  const result = ` ◝(・ω・)◟형기 종강 D-${d2}\n(~˘▾˘)~ 건우 종강 D-${d}`;
+  const result = jonggangoutput(hyungJonggang.getMonth()+1, hyungJonggang.getDate(),d2,gunJonggang.getMonth()+1, gunJonggang.getDate(),d);
   return result;
 }
 
-const ssafy = () => {
-  let ssafysign = new Date("May 14,2021,17:00:00");
-  let ssafytest = new Date("May 22,2021,10:00:00");
-  let now = new Date(); //현재시간을 구한다. 
-  const remainDate = ssafysign - now;
-  const remainDate2 = ssafytest - now;
-  var d = Math.floor(remainDate / (1000 * 60 * 60 * 24));
-  var d2 = Math.floor(remainDate2 / (1000 * 60 * 60 * 24));
-  var h = Math.floor((remainDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var m = Math.floor((remainDate % (1000 * 60 * 60)) / (1000 * 60));
-  var s = Math.floor((remainDate % (1000 * 60)) / 1000);
-  if(s < 10){
-      s = '0'+s;
-  }
-  const result = `싸피 서류 제출 D-${d}\n 싸피 적성 D-${d2}`;
-  return result;
+const jonggangoutput = ( month1, date1, dday1, month2, date2, dday2) =>{
+  const exampleEmbed = new Discord.MessageEmbed()
+	.setColor("#df7ff4")
+	.setTitle("형기 & 건우 종강")
+  .addFields(
+		{ name: "형기 종강", value: `${month1}월 ${date1}일 ⎛⎝⎛° ͜ʖ°⎞⎠⎞ `, inline: true },
+		{ name: '남은 날짜', value: `(ง˙∇˙)ว D - ${dday1}`, inline: true },
+    { name: '\u200B', value: '\u200B' },
+    { name: "건우 종강", value: `${month2}월 ${date2}일 ⎛⎝⎛° ͜ʖ°⎞⎠⎞ `, inline: true },
+		{ name: '남은 날짜', value: `(ว˙∇˙)ง D - ${dday2} `, inline: true },
+	)
+  return exampleEmbed;
 }
+
 
 const quitCount = () => {
     let quit = new Date("May 28,2021,18:00:00");
@@ -91,7 +99,6 @@ const quitoutput = (quit, count, h, m, s) =>{
 	.setColor("#df7ff4")
 	.setTitle('문더니 퇴사 '+':woman_office_worker:')
   .addFields(
-    
 		{ name: "퇴사날", value: `${quit.getMonth()+1}월 ${quit.getDate()}일`, inline: true },
 		{ name: '남은 날짜', value: `D - ${count}`, inline: true },
     { name: '\u200B', value: '\u200B' },
@@ -187,6 +194,8 @@ const birth = (msg) => {
   case "문선생일":
   case "문선 생일":
   case "문던생일":
+  case "문더니생일":
+  case "문더니 생일":
   case "문던 생일":
   result = birthoutput(msg, moon.getMonth()+1,moon.getDate(),d4,"#df7ff4");
   break;
@@ -204,12 +213,6 @@ const birth = (msg) => {
   case "건우 생일":
   result = birthoutput(msg, gun.getMonth()+1,gun.getDate(),d,"#4ee8ba");
   break;
-  // case "생일":
-  //   result = birthoutput(msg, moon.getMonth()+1,moon.getDate(),d4,"#df7ff4");
-  //   result = birthoutput(msg, sun.getMonth()+1,sun.getDate(),d3,"#f96d80");
-  //   result = birthoutput(msg, hyung.getMonth()+1,hyung.getDate(),d2,"#969696");
-  //   result = birthoutput(msg, gun.getMonth()+1,gun.getDate(),d,"#4ee8ba");
-  // }
   }
   return result;
 }
@@ -235,7 +238,7 @@ client.on('message', msg => {
     case '종강': 
     msg.reply(jonggang());  
     break;
-    
+
     case '여행': 
         msg.reply(tripCount());  
         break;
