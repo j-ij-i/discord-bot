@@ -26,10 +26,10 @@ const tripCount = () => {
 const tripoutput = ( month, date, dday) =>{
   const exampleEmbed = new Discord.MessageEmbed()
 	.setColor("#df7ff4")
-	.setTitle("여행")
+	.setTitle(":school_satchel:"+"여행"+":two_men_holding_hands: :two_women_holding_hands:")
   .addFields(
-		{ name: "여행 날짜", value: `${month}월 ${date}일 ⎛⎝⎛° ͜ʖ°⎞⎠⎞ `, inline: true },
-		{ name: '남은 날짜', value: `(ง˙∇˙)ว D - ${dday} (ว˙∇˙)ง`, inline: true },
+		{ name: "여행 날짜"+":bullettrain_side: ", value: `${month}월 ${date}일 `, inline: true },
+		{ name: '남은 날짜'+":date: ", value: `(ง˙∇˙)ว D - ${dday} (ว˙∇˙)ง`, inline: true },
 	)
   return exampleEmbed;
 }
@@ -133,7 +133,16 @@ const workendCount = () => {
   }else{
     result = "문더니 퇴근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 수고~ _:(´ཀ`」 ∠):_ ';
   }
+  result = workendOutput(result);
   return result;
+}
+const workendOutput = (result) => {
+  const exampleEmbed = new Discord.MessageEmbed()
+	.setColor("#df7ff4")
+  .addFields(
+		{ name: "퇴근", value: result, inline: true },
+	)
+  return exampleEmbed;
 }
 
 const workCount = () => {
@@ -148,7 +157,6 @@ const workCount = () => {
   if(s < 10){
       s = '0'+s;
   }
- 
   if(work.getDay() === 6 || work.getDay() === 0){
     result = "내일은 주말입니다~~ 잘쉬세용~";
   }else if(now.getHours() < 18){
@@ -157,7 +165,17 @@ const workCount = () => {
   else{
     result = "문더니 출근까지\n"+h+'시간 '+m+'분 '+s+'초 남았습니당 ˃̣̣̣̣̣̣︿˂̣̣̣̣̣̣ \n문더니 화이팅~ (ง •̀_•́)ง ';
   }
+  result = workCountOutput(result);
   return result;
+}
+
+const workCountOutput = (result) => {
+  const exampleEmbed = new Discord.MessageEmbed()
+	.setColor("#df7ff4")
+  .addFields(
+		{ name: "출근", value: result, inline: true },
+	)
+  return exampleEmbed;
 }
 
 const nowTimeCount = () => {
@@ -194,8 +212,6 @@ const birth = (msg) => {
   case "문선생일":
   case "문선 생일":
   case "문던생일":
-  case "문더니생일":
-  case "문더니 생일":
   case "문던 생일":
   result = birthoutput(msg, moon.getMonth()+1,moon.getDate(),d4,"#df7ff4");
   break;
@@ -236,65 +252,23 @@ client.on('ready', () => {
 client.on('message', msg => {
   switch(msg.content){
     case '종강': 
-    msg.reply(jonggang());  
-    break;
-
+      msg.reply(jonggang());  
+      break;
     case '여행': 
-        msg.reply(tripCount());  
-        break;
-
-    case '퇴근 언제해':
-    case '퇴근언제야':
-    case '퇴근 언제야':      
+      msg.reply(tripCount());  
+      break; 
     case '퇴근':           
-    case '퇴근해':           
-    case '퇴근해!':           
-    case '문더나 퇴근해!':   
-    case '퇴근언제해':
-    case '언제 퇴근해':     
-    case '언제퇴근해':     
       msg.reply(workendCount());  
       break;  
-
-    case '출근 언제해':
-    case '출근언제야':
-    case '출근 언제야':
     case '출근':           
-    case '출근해':    
-    case '출근해!':    
-    case '문더나 출근해!':   
-    case '출근언제해':
-    case '언제 출근해':     
-    case '언제출근해':     
       msg.reply(workCount());
       break;
-      
-    case '퇴사 언제해':
-    case '퇴사언제야':
-    case '퇴사 언제야':           
-    case '문더나 퇴사언제해':   
-    case '퇴사언제해':
-    case '언제 퇴사해':     
-    case '언제퇴사해':
     case '퇴사':
-    case '퇴사일':
-    case '퇴사날짜':
-    case '퇴사날':
       msg.reply(quitCount());
       break;
-
-    case '지금 몇시야':
-    case '지금몇시야':
-    case '몇시야':
-    case '몇시니':
     case '현재시간':
       msg.reply(nowTimeCount());
       break;
-      
-    case '싸피':
-      msg.reply(ssafy());
-      break;
-
     case '생일':
     case "문던생일":
     case "문던 생일":
