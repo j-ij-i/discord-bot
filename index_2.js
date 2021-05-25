@@ -69,7 +69,7 @@ const jonggangoutput = ( month1, date1, dday1, month2, date2, dday2) =>{
 
 
 const quitCount = () => {
-    let quit = new Date("May 28,2021,18:00:00");
+    let quit = new Date("May 31,2021,18:00:00");
     let now = new Date(); //현재시간을 구한다. 
     const remainDate = quit - now;
     let i = 0;
@@ -124,7 +124,12 @@ const workendCount = () => {
     result = "오늘은 주말이라 출근 안했습니다~ ¯＼_(ツ)_/¯ ";
   }else if(now.getDate() === 7 || now.getDate() === 19){
     result = "오늘 문선이는 쉬었습니다~  ◟( ˘ ³˘)◞";
-  }else if(now.getHours() < 9){
+  }else if((now.getDate() === 25 || now.getDate() === 27) && h > -1){
+    result = ":beers: "+"오늘은 회식날입니다~\n 퇴근 후 회식까지 "+h+'시간 '+m+'분 '+s+'초 남았습니당~\n문더니 적게마셩~' ;
+  }else if((now.getDate() === 25 || now.getDate() === 27) && h < -1){
+    result = ":beers: "+"오늘은 회식날입니다~\n 문더니 회식갔습니다~";
+  }
+  else if(now.getHours() < 9){
     result = "문더니 아직 출근 안했습니다 ͡° ͜ʖ ͡° ";
   }else if(h < -1){
     result = "문더니 퇴근했습니다~ \n수고했어 문더니~~ ε⌯(ง ˙ω˙)ว ";
