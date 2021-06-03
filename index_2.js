@@ -69,7 +69,7 @@ const jonggangoutput = ( month1, date1, dday1, month2, date2, dday2) =>{
 
 
 const quitCount = () => {
-    let quit = new Date("May 31,2021,18:00:00");
+    let quit = new Date("May 31,2021,15:00:00");
     let now = new Date(); //현재시간을 구한다. 
     const remainDate = quit - now;
     let i = 0;
@@ -83,13 +83,13 @@ const quitCount = () => {
     if(s < 10){
         s = '0'+s;
     }
-    for( let i = 0 ; quitDate+i <= quitDday; i++){
-        let qd = new Date(now.getFullYear(),now.getMonth(),now.getDate()+i,18,00,00);
-          if(quitDate+i !== 5 && quitDate+i !== 19 && qd.getDay() !== 6 && qd.getDay() !== 0){
-            count++;
-            console.log( "i : "+i + " day : "+ qd.getDate());
-          }
-      }
+    // for( let i = 0 ; quitDate+i <= quitDday; i++){
+    //     let qd = new Date(now.getFullYear(),now.getMonth(),now.getDate()+i,18,00,00);
+    //       if(quitDate+i !== 5 && quitDate+i !== 19 && qd.getDay() !== 6 && qd.getDay() !== 0){
+    //         count++;
+    //         console.log( "i : "+i + " day : "+ qd.getDate());
+    //       }
+    //   }
     const result = quitoutput(quit, count, h, m, s);
     return result;
 }
@@ -98,6 +98,7 @@ const quitoutput = (quit, count, h, m, s) =>{
   const exampleEmbed = new Discord.MessageEmbed()
 	.setColor("#df7ff4")
 	.setTitle('문더니 퇴사 '+':woman_office_worker:')
+  .setImage(url="https://blog.kakaocdn.net/dn/ct1hgJ/btqC6mkJ1kL/pzkOVMfSuCYXmSaWgSWdr1/img.jpg")
   .addFields(
 		{ name: "퇴사날", value: `${quit.getMonth()+1}월 ${quit.getDate()}일`, inline: true },
 		{ name: '남은 날짜', value: `D - ${count}`, inline: true },
